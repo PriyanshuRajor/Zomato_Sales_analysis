@@ -10,7 +10,7 @@ group by s.userid
 select userid, count(distinct created_date) total_days
 from sales group by userid
 
--- what is first product purchased by each customer?
+-- 3  What is the first product purchased by each customer?
 
 with cte as 
 (Select *, rank() over(partition by userid order by created_date) rnk from sales)
@@ -19,7 +19,7 @@ where rnk = 1
 
 
 
--- what is the most purchased item on menu and how many time did it purchased?
+-- 4  What is the most purchased item on the menu and how many times was it purchased?
 
 select userid, count(product_id) 
 from sales where product_id =  
@@ -29,7 +29,7 @@ limit 1 )
 group by userid
 
 
--- which item was the most popular for each customer?
+-- 5  Which item was the most popular for each customer?
 
 with cte as 
 (select *, rank() over(partition by userid order by ct desc) rnk from
